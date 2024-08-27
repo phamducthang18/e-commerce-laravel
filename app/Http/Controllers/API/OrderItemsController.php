@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\API;
 
-use App\Models\Currency;
+use App\Models\OrderItems;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class CurrencyController extends Controller
+class OrderItemsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -34,7 +35,7 @@ class CurrencyController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Currency $currency)
+    public function show(OrderItems $orderItems)
     {
         //
     }
@@ -42,7 +43,7 @@ class CurrencyController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Currency $currency)
+    public function edit(OrderItems $orderItems)
     {
         //
     }
@@ -50,7 +51,7 @@ class CurrencyController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Currency $currency)
+    public function update(Request $request, OrderItems $orderItems)
     {
         //
     }
@@ -58,7 +59,7 @@ class CurrencyController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Currency $currency)
+    public function destroy(OrderItems $orderItems)
     {
         //
     }
