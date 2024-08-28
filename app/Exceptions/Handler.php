@@ -6,6 +6,7 @@ use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
 
 class Handler extends ExceptionHandler
+
 {
     /**
      * The list of the inputs that are never flashed to the session on validation exceptions.
@@ -27,13 +28,10 @@ class Handler extends ExceptionHandler
             //
         });
     }
-    public function report(Exception $exception)
-{
-    // Kill reporting if this is an "access denied" (code 9) OAuthServerException.
-    if ($exception instanceof \League\OAuth2\Server\Exception\OAuthServerException && $exception->getCode() == 9) {
-        return;
+    public function report(Throwable $exception)
+    {
+        parent::report($exception);
     }
+    
 
-    parent::report($exception);
-}
 }
