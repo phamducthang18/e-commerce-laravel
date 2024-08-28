@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\API\CategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,4 +33,9 @@ Route::prefix('auth')->group(function (){
             'message' => 'Logged out successfully.'
         ]);
     });
+});
+
+Route::middleware('auth:api')->group(function(){
+    Route::apiResource('categories', CategoryController::class);
+   
 });
