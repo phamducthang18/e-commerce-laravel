@@ -39,3 +39,6 @@ Route::middleware('auth:api')->group(function(){
     Route::apiResource('categories', CategoryController::class);
    
 });
+Route::middleware(['auth:api','role:admin'])->group(function(){
+    
+});
