@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\API\CategoryController;
+use App\Http\Controllers\RoleController;
+use App\Http\Controllers\API\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,6 +41,9 @@ Route::middleware('auth:api')->group(function(){
     Route::apiResource('categories', CategoryController::class);
    
 });
-Route::middleware(['auth:api','role:admin'])->group(function(){
-    
+Route::middleware(['auth:api', 'role:admin'])->group(function(){
+    Route::apiResource('role', RoleController::class)->names('roles');
+    Route::post('/user/{id}/assign-role', [UserController::class, 'assignRoleToUser']);
+    Route::post('/user/{id}/remove-role', [UserController::class,'removeRoleFromUser']);
+    Route::post('/user/{id}/update-role', [UserController::class,'updateRoleFromUser']);
 });
