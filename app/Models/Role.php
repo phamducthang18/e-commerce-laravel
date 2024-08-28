@@ -1,19 +1,15 @@
 <?php
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use Spatie\Permission\Models\Role as SpatieRole;
+use Spatie\Permission\Models\Permission;
 
-class Role extends Model
+class Role extends SpatieRole
 {
     use HasFactory;
 
-    public function permission(){
-        return $this->belongsToMany(Permissiom::class);
-    }
-
-    public function user(){
-        return $this->belongsToMany(User::class);
-    }
+    // Các thuộc tính và phương thức khác
+    // Quan hệ với Permission (đã có sẵn trong package Spatie)
+    // Quan hệ với User (đã có sẵn trong package Spatie)
 }

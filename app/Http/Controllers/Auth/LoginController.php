@@ -15,6 +15,7 @@ class LoginController extends Controller
      */
     public function __invoke(LoginRequest $request)
     {
+        
         $credentials = $request->only('email', 'password');
         
         $credentials = request(['email', 'password']);
@@ -23,7 +24,8 @@ class LoginController extends Controller
                 'message' => 'Unauthorized'
             ], 401);
         $user = $request->user();
-        $tokenResult = $user->createToken('Personal Access Token');
+        $roles = $user->roles->pluck('name')->toArray();
+        $tokenResult = $user->createToken('Personal Access Token',$roles);
         $token = $tokenResult->token;
         if ($request->remember_me)
             $token->expires_at = Carbon::now()->addWeeks(1);
