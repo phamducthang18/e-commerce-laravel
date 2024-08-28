@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 use App\Http\Requests\LoginRequest;
 
 class LoginController extends Controller
@@ -16,23 +17,23 @@ class LoginController extends Controller
     {
         $credentials = $request->only('email', 'password');
         
-        if (!Auth::attempt($credentials)) {
+        $credentials = request(['email', 'password']);
+        if(!Auth::attempt($credentials))
             return response()->json([
-                'message' => 'The provided credentials do not match our records.'
+                'message' => 'Unauthorized'
             ], 401);
-        }
-
-        $user = Auth::user();
-
-        // Tạo token và lấy giá trị plainTextToken
+        $user = $request->user();
         $tokenResult = $user->createToken('Personal Access Token');
-        $token = $tokenResult->plainTextToken;
-       
-
+        $token = $tokenResult->token;
+        if ($request->remember_me)
+            $token->expires_at = Carbon::now()->addWeeks(1);
+        $token->save();
         return response()->json([
-            'access_token' => $token,
-            'token_type'   => 'Bearer',
-            'expires_at'   => null,
+            'access_token' => $tokenResult->accessToken,
+            'token_type' => 'Bearer',
+            'expires_at' => Carbon::parse(
+                $tokenResult->token->expires_at
+            )->toDateTimeString()
         ]);
     }
 }
