@@ -7,7 +7,7 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\API\CategoryController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\API\UserController;
-
+use App\Http\Controllers\ChatController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -19,7 +19,7 @@ use App\Http\Controllers\API\UserController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 Route::prefix('auth')->group(function (){
@@ -47,3 +47,4 @@ Route::middleware(['auth:api', 'role:admin'])->group(function(){
     Route::post('/user/{id}/remove-role', [UserController::class,'removeRoleFromUser']);
     Route::post('/user/{id}/update-role', [UserController::class,'updateRoleFromUser']);
 });
+Route::post('/send-message', [ChatController::class,'sendMessage']);

@@ -14,5 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    $redis = app()->make('redis');
+    $redis->set('key1', 'value2');
+    return $redis->get('key1');
 });
