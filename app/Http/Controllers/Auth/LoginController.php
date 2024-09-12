@@ -21,7 +21,8 @@ class LoginController extends Controller
         $credentials = request(['email', 'password']);
         if(!Auth::attempt($credentials))
             return response()->json([
-                'message' => 'Unauthorized'
+                
+                'message' => 'Tài khoản hoặc mật khẩu không đúng.'
             ], 401);
         $user = $request->user();
         
