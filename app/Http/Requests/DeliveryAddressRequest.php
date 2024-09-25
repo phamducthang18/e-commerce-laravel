@@ -27,7 +27,7 @@ class DeliveryAddressRequest extends FormRequest
         return [
             'consignee_name' => 'required|string',
             'phone_number'=>'required|regex:/^\+?[0-9]{1,4}?[0-9]{6,14}$/',
-            'specific' =>'string',
+            'specific' =>'nullable|string',
             'street' => 'required',
             'wards_id'=>'required|exists:wards,id',
             'districts_id'=>'required|exists:districts,id',
@@ -40,7 +40,9 @@ class DeliveryAddressRequest extends FormRequest
     {
         $data = $this->validated();
         $data['user_id'] = auth()->id();
-      
+        if(!isset($data['is_default'])){
+            $data['is_default'] = false;
+        }
         return $data;
     }
     protected function failedValidation(Validator $validator)
