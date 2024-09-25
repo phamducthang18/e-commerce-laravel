@@ -40,22 +40,28 @@ class DeliveryAddressController extends Controller
     public function store(DeliveryAddressRequest $request)
     {
        
-        echo print_r( $request->getData());die;
-        echo 123123;die;
+        
+        $deliveryAddress = DeliveryAddress::create($request->getData());
+        return response()->json([
+            'status'=>'success',
+            'message'=>'Delivery address created successfully',
+            'data'=> $deliveryAddress
+        ],201);
+        
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Category $category)
-    {
-        //
-    }
+    // public function show(Category $category)
+    // {
+    //     //
+    // }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Category $category)
+    public function edit( $category)
     {
         //
     }
@@ -63,7 +69,7 @@ class DeliveryAddressController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Category $category)
+    public function update(Request $request,  $category)
     {
         //
     }
@@ -71,7 +77,7 @@ class DeliveryAddressController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Category $category)
+    public function destroy( $category)
     {
         //
     }
