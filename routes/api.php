@@ -7,7 +7,9 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\API\CategoryController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\API\UserController;
+use App\Http\Controllers\API\DeliveryAddressController;
 use App\Http\Controllers\ChatController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -39,6 +41,7 @@ Route::prefix('auth')->group(function (){
 
 Route::middleware('auth:api')->group(function(){
     Route::apiResource('categories', CategoryController::class);
+    Route::apiResource('deliveries', DeliveryAddressController::class);
    
 });
 Route::middleware(['auth:api', 'role:admin'])->group(function(){
@@ -46,5 +49,6 @@ Route::middleware(['auth:api', 'role:admin'])->group(function(){
     Route::post('/user/{id}/assign-role', [UserController::class, 'assignRoleToUser']);
     Route::post('/user/{id}/remove-role', [UserController::class,'removeRoleFromUser']);
     Route::post('/user/{id}/update-role', [UserController::class,'updateRoleFromUser']);
+    
 });
 Route::post('/send-message', [ChatController::class,'sendMessage']);
