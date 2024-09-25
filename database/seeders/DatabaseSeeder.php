@@ -19,7 +19,11 @@ class DatabaseSeeder extends Seeder
             InventorySeeder::class,
             OrderItemsSeeder::class,
             OrdersSeeder::class,
-            RolesAndPermissionsSeeder::class,
+            // RolesAndPermissionsSeeder::class,
+            ProvinceSeeder::class,
+            DistrictSeeder::class,
+            WardSeeder::class,
+            DeliveryAddressSeeder::class,
         ]);
     }
 }
