@@ -49,10 +49,21 @@ class ConversationController extends Controller
         $limit = $request->input('limit', 10); 
         $offset = $request->input('offset', 0);
         $conversation = Conversation::find($conversation);
-        $messages = $conversation->messages()->skip($offset)->take($limit)->get();
+        $messages = $conversation->messages()->skip($offset)->take($limit)->with('user')->get();
+        $formattedMessages = $messages->map(function ($message) {
+            return [
+                'id' => $message->id,
+                'content' => $message->content,
+                'user' => [
+                    'id' => $message->user->id,
+                    'name' => $message->user->name, 
+                ],
+                'created_at' => $message->created_at,
+            ];
+        });
         return response()->json([
             'conversation' => $conversation,
-            'messages' => $messages
+            'messages' => $formattedMessages,
         ]); 
     }
     public function edit($id){

@@ -17,6 +17,7 @@ class MessageSent implements ShouldBroadcast
 
     public $user;
     public $message;
+    public $room;
 
     public function __construct($user, $message,$roomId)
     {
@@ -28,13 +29,15 @@ class MessageSent implements ShouldBroadcast
     public function broadcastOn()
     {
        log::info("Broadcasting");       
-        return new Channel('chat.',$this->room);
+        return new Channel('sendMessage');
     }
     public function broadcastWith()
     {
         $data = [
             'user' => $this->user,
             'message' => $this->message,
+            'room' => $this->room,
+            
             'timestamp' => now(),
         ];
         

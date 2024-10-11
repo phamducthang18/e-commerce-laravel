@@ -24,6 +24,7 @@ class DatabaseSeeder extends Seeder
             DistrictSeeder::class,
             WardSeeder::class,
             DeliveryAddressSeeder::class,
+            ConversationSeeder::class,
         ]);
     }
 }
