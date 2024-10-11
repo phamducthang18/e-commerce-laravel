@@ -19,6 +19,7 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
+        'dob',
         'password',
     ];
 
@@ -40,4 +41,15 @@ class User extends Authenticatable
     protected $casts = [
         'password' => 'hashed',
     ];
+
+    public function conversations(){
+        return $this->belongsToMany(Conversation::class, 'conversation_user', 'user_id', 'conversation_id');    }
+
+    public function messages(){
+        return $this->hasMany(Message::class);
+    }
+
+    public function messageStatuses(){
+        return $this->hasMany(MessageStatus::class);
+    }
 }
