@@ -9,6 +9,7 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\API\UserController;
 use App\Http\Controllers\API\DeliveryAddressController;
 use App\Http\Controllers\ChatController;
+use App\Http\Controllers\ConversationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -42,6 +43,7 @@ Route::prefix('auth')->group(function (){
 Route::middleware('auth:api')->group(function(){
     Route::apiResource('categories', CategoryController::class);
     Route::apiResource('deliveries', DeliveryAddressController::class);
+    Route::apiResource('conversation', ConversationController::class);
    
 });
 Route::middleware(['auth:api', 'role:admin'])->group(function(){
@@ -51,4 +53,6 @@ Route::middleware(['auth:api', 'role:admin'])->group(function(){
     Route::post('/user/{id}/update-role', [UserController::class,'updateRoleFromUser']);
     
 });
-Route::post('/send-message', [ChatController::class,'sendMessage']);
+Route::middleware(['auth:api'])->group(function(){
+    Route::post('/send-message', [ChatController::class,'sendMessage']);
+});
