@@ -29,7 +29,7 @@ class MessageSent implements ShouldBroadcast
     public function broadcastOn()
     {
        log::info("Broadcasting");       
-        return new Channel('sendMessage');
+        return new Channel('sendMessage');  
     }
     public function broadcastWith()
     {
@@ -37,7 +37,6 @@ class MessageSent implements ShouldBroadcast
             'user' => $this->user,
             'message' => $this->message,
             'room' => $this->room,
-            
             'timestamp' => now(),
         ];
         

@@ -15,10 +15,10 @@ class ConversationController extends Controller
 
         $conversations = $user->conversations()
             ->with(['messages' => function ($query) {
-                $query->latest()->limit(1);
-            },'messages.user'])
+                $query->latest()->take(1);
+            }])
             ->get();
-
+        
         return response()->json($conversations);
     }
     public function create(){
@@ -49,8 +49,9 @@ class ConversationController extends Controller
         $limit = $request->input('limit', 10); 
         $offset = $request->input('offset', 0);
         $conversation = Conversation::find($conversation);
-        $messages = $conversation->messages()->skip($offset)->take($limit)->with('user')->get();
-        $formattedMessages = $messages->map(function ($message) {
+        $messages = $conversation->messages()->skip($offset)->orderBy('created_at', 'desc')->take($limit)->with('user')->get();
+        $sortedMessages = $messages->sortBy('created_at')->values();
+        $formattedMessages = $sortedMessages->map(function ($message) {
             return [
                 'id' => $message->id,
                 'content' => $message->content,

@@ -10,6 +10,7 @@ use App\Http\Controllers\API\UserController;
 use App\Http\Controllers\API\DeliveryAddressController;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\ConversationController;
+use App\Http\Controllers\MessageController;
 
 /*
 |--------------------------------------------------------------------------
@@ -44,7 +45,7 @@ Route::middleware('auth:api')->group(function(){
     Route::apiResource('categories', CategoryController::class);
     Route::apiResource('deliveries', DeliveryAddressController::class);
     Route::apiResource('conversation', ConversationController::class);
-   
+   Route::apiResource('messages', MessageController::class);
 });
 Route::middleware(['auth:api', 'role:admin'])->group(function(){
     Route::apiResource('role', RoleController::class)->names('roles');
