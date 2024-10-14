@@ -20,7 +20,7 @@ class ChatController extends Controller
         if (empty($message)) {
             return response()->json(['status' => 'Message is empty!'], 400);
         }
-        event(new MessageSent($user, $message));
+        // event(new MessageSent($user, $message,$roomId));
         
         Log::info('Chat sent message', ['message' => $message]);
         return response()->json(['status' => 'Message Sent!']);
