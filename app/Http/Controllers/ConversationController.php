@@ -13,13 +13,18 @@ class ConversationController extends Controller
 
         // $conversations = $user->conversations()->with('messages')->get();
 
+        // $conversations = $user->conversations()
+        //     ->with(['messages' => function ($query) {
+        //         $query->latest()->take(1);
+        //     },'messages.user'])
+        //     ->get();
         $conversations = $user->conversations()
-            ->with(['messages' => function ($query) {
-                $query->latest()->take(1);
-            }])
-            ->get();
-        
-        return response()->json($conversations);
+        ->with(['latestMessage.user']) // Lấy tin nhắn mới nhất và thông tin người gửi
+        ->get();
+        $sortedConversations = $conversations->sortByDesc(function ($conversation) {
+            return $conversation->latestMessage ? $conversation->latestMessage->created_at : null;
+        });
+        return response()->json($sortedConversations->values()->all());
     }
     public function create(){
 
